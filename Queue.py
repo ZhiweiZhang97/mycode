@@ -33,3 +33,4 @@ class Queue(object):
             raise Exception('underflow!')
         else:
             return self.queue[self.size-1-self.front-1]
+    

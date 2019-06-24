@@ -683,3 +683,73 @@ def matrixChainMultiplication():
             for k in range(i,j):
                 m[i][j] = min(m[i][j], m[i][k] + m[k+1][j] + p[i-1] * p[k] * p[j])
     print(m[1][n-1])
+
+################################################################################
+#图
+#请编写一个程序，将以邻接表形式给出的有向图G以邻接矩阵形式输出。G包含n( = |V|)个
+#顶点，编号分别为1至n
+#Input:第一行输入G的顶点数n，接下来的n行，按照下述格式输入各顶点u的邻接表Adj[u].
+#      u k v1 v2 ... vk
+#      其中u为顶点编号，k为u的度，v1 v2 ...vk为与u相邻的顶点编号
+#Output:输出G的邻接矩阵。aij之间用一个空格隔开。
+def adj_Graph():
+    n = int(input('请输入图G的顶点数n：'))
+    print('以邻接表表示法输入顶点编号：')
+    count = 0
+    adj = np.zeros((n,n))
+    while(count < n):
+        Input = [int(i) for i in input().split()]
+        u,k = Input[0],Input[1]
+        if k != 0:
+            for i in range(2,len(Input)):
+                v = Input[i]
+                adj[u-1][v-1] = 1
+        count += 1
+    for i in range(n):
+        for j in range(n):
+            print(int(adj[i][j]),' ',end = '')
+        print()
+#
+from Graph import ALGraph
+def Graph():
+    V = ['A','B','C','D','E']
+    Graph = ALGraph(len(V))
+    for i in V:
+        Graph.addVertices(i)
+    Graph.addEdge('A','B')
+    Graph.addEdge('A','E')
+    Graph.addEdge('B','A')
+    Graph.addEdge('B','E')
+    Graph.addEdge('B','C')
+    Graph.addEdge('B','D')
+    Graph.addEdge('C','B')
+    Graph.addEdge('C','D')
+    Graph.addEdge('D','B')
+    Graph.addEdge('D','A')
+    Graph.addEdge('D','E')
+    Graph.addEdge('D','C')
+    Graph.addEdge('E','D')
+    Graph.addEdge('E','A')
+    Graph.addEdge('E','B')
+    Graph.addEdge('E','B')
+    Graph.addEdge('F','B')
+    Graph.printALGraph()
+    print('广度优先搜索:',Graph.BFSTraverse())
+    print('深度优先搜索:',Graph.DFSTraverse())
+    if Graph.Adjacent('E','B'):
+        print('存在边<E,B>')
+    else:
+        print('不存在边<E,B>')
+    if Graph.Adjacent('F','B'):
+        print('存在边<F,B>')
+    else:
+        print('不存在边<F,B>')
+    print('与顶点A邻接的边为',Graph.Neighbors('A'))
+    Graph.deleteEdge('B','E')
+    print('------')
+    Graph.printALGraph()
+    Graph.deleteVertices('A')
+    print('------')
+    Graph.printALGraph()
+    print('顶点B的第一个邻接点为',Graph.FirstNeighbor('B'))
+    print('顶点C除了B之外下一个邻接点为',Graph.NextNeighbor('C','B'))
